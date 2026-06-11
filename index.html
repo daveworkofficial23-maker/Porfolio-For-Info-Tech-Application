@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dave Neil Dela Cruz — IT Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:       #050d1a;
+  --navy-mid:   #0a1628;
+  --navy-light: #0f1f38;
+  --accent:     #00c8ff;
+  --accent-2:   #00c8ff;
+  --purple:     #00c8ff;
+  --teal:       #00c8ff;
+  --green:      #00c8ff;
+  --text-1:     #e8f4ff;
+  --text-2:     #7aafd4;
+  --text-3:     #2d5278;
+  --border:     rgba(0,180,255,0.1);
+  --card:       rgba(0,120,200,0.06);
+  --card-h:     rgba(0,150,220,0.12);
+  --display:    'Space Grotesk', sans-serif;
+  --body:       'Inter', sans-serif;
+}
+
+html { scroll-behavior: smooth; 
+}
+
+body {
+  background: var(--navy);
+  color: var(--text-1);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#stars-canvas {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  opacity: 0.35;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 2.5rem;
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.3s;
+}
+
+nav.scrolled { padding: 0.65rem 2.5rem; 
+}
+
+.nav-logo {
+  font-family: var(--display);
+  font-size: 14.5px; font-weight: 700; letter-spacing: 0.02em;
+  color: var(--text-1);
+}
+
+.nav-logo span { color: var(--accent-2); 
+}
+
+.nav-links { display: flex; gap: 1.75rem; list-style: none; 
+}
+
+.nav-links a {
+  font-size: 12.5px; font-weight: 400; letter-spacing: 0.04em;
+  color: var(--text-2); text-decoration: none;
+  transition: color 0.2s;
+  position: relative; padding-bottom: 2px;
+}
+
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--accent-2);
+  transition: width 0.25s;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--text-1); }
+.nav-links a:hover::after,
+.nav-links a.active::after { width: 100%; }
+
+section { max-width: 900px; margin: 0 auto; padding: 6rem 2rem; position: relative; z-index: 1; }
+.divider { height: 1px; background: var(--border); max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent-2);
+  margin-bottom: 0.5rem;
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 18px; height: 1.5px;
+  background: var(--accent-2);
+  flex-shrink: 0;
+}
+h2 {
+  font-family: var(--display);
+  font-size: 1.75rem; font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+  margin-bottom: 2.5rem;
+}
+
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  align-items: center;
+  gap: 4rem;
+  padding-top: 5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  position: relative;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+#hero::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: 180px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,180,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-text {
+  flex: 1; min-width: 0;
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.hero-greeting {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-3);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-family: var(--display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700; line-height: 1.0;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.name-first { color: var(--text-1); 
+}
+
+.name-last {
+  display: block;
+  color: var(--accent);
+}
+
+.hero-role {
+  margin-top: 0.75rem;
+  font-size: 1rem; font-weight: 400;
+  color: var(--accent-2); letter-spacing: 0.01em;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px; height: 1.1em;
+  background: var(--accent-2);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink { 0%,100% { opacity: 1 } 50% { opacity: 0 } 
+}
+
+.hero-bio {
+  margin: 1.5rem 0 2rem;
+  font-size: 0.93rem; color: var(--text-2);
+  max-width: 480px; line-height: 1.85;
+}
+
+.hero-cta { display: flex; 
+  gap: 0.75rem; 
+  flex-wrap: wrap; 
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.6rem 1.35rem;
+  background: var(--accent); color: #080808;
+  font-size: 13px; font-weight: 500; border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  background: #2563eb; transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(59,130,246,0.35);
+}
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.6rem 1.35rem;
+  color: var(--text-2); font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border); border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-ghost:hover { border-color: rgba(255,255,255,0.18); 
+  color: var(--text-1); 
+}
+
+.hero-meta {
+  display: flex; gap: 1.75rem; flex-wrap: wrap;
+  margin-top: 2.5rem; padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.meta-chip {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--text-3);
+  text-decoration: none; transition: color 0.2s;
+}
+
+.meta-chip:hover { color: var(--text-2);
+}
+
+.meta-chip svg { flex-shrink: 0; 
+}
+
+.hero-photo {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: auto;
+}
+
+.hero-photo::before { display: none; }
+.hero-photo::after  { display: none; }
+
+.ring-wrap {
+  position: relative;
+  width: 340px;
+  height: 460px;
+  border-radius: 16px;
+  border: 2px solid rgba(0,200,255,0.25);
+  box-shadow:
+    0 0 0 6px rgba(0,180,255,0.06),
+    0 0 40px rgba(0,180,255,0.12),
+    0 24px 60px rgba(0,0,0,0.5);
+  overflow: hidden;
+  background: var(--navy-mid);
+}
+
+.ring-wrap::before { display: none; }
+.ring-wrap::after  { display: none; }
+
+.ring-img {
+  position: absolute; inset: 0;
+  border-radius: 0;
+  overflow: hidden;
+  z-index: 1;
+  padding: 0;
+  background: none;
+  animation: none;
+}
+
+.ring-img::before { display: none; }
+
+.ring-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 0;
+  filter: contrast(1.05) brightness(0.92);
+  z-index: 1;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) }
+}
+
+@keyframes borderSpin {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+.availability {
+  margin-top: 1rem;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--accent);
+  background: rgba(0,180,255,0.06);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,200,255,0.25);
+  border-radius: 6px; padding: 5px 15px;
+}
+
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse { 0%,100% { opacity:1; transform:scale(1) } 50% { opacity:0.35; transform:scale(0.7) } }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.about-stat {
+  background: var(--card);
+  padding: 1.5rem 1.75rem;
+  transition: background 0.2s;
+}
+
+.about-stat:hover { background: var(--card-h); }
+.stat-num {
+  font-family: var(--display);
+  font-size: 1.9rem; font-weight: 700;
+  color: var(--text-1); line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-num span { color: var(--accent-2); }
+
+.stat-label { font-size: 12px; color: var(--text-3); }
+
+.about-body {
+  font-size: 0.93rem; color: var(--text-2);
+  line-height: 1.9; max-width: 680px;
+}
+
+.about-body p + p { margin-top: 1rem; }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+.skill-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.35rem 1.5rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.skill-card:hover {
+  background: var(--card-h);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-3px);
+}
+
+.skill-cat {
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent-2); margin-bottom: 0.85rem;
+}
+
+.skill-tags { display: flex; flex-wrap: wrap; gap: 5px; 
+}
+
+.tag {
+  font-size: 11.5px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  color: var(--text-2); border-radius: 6px; padding: 3px 9px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.tag:hover { border-color: rgba(96,165,250,0.3); 
+  color: var(--accent-2); 
+}
+
+.projects-list { display: flex; flex-direction: column; gap: 1.1rem; }
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.75rem 2rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--accent-2), var(--purple));
+  border-radius: 3px 0 0 3px;
+  opacity: 0; transition: opacity 0.25s;
+}
+
+.project-card:hover {
+  background: var(--card-h);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-3px);
+}
+
+.project-card:hover::after { opacity: 1; 
+}
+
+.project-head {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.project-title {
+  font-family: var(--display);
+  font-size: 0.98rem; font-weight: 600;
+  color: var(--text-1); line-height: 1.35;
+}
+
+.badge {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  background: rgba(59,130,246,0.12); color: var(--accent-2);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 100px; padding: 3px 12px;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+.project-desc {
+  font-size: 13.5px; color: var(--text-2);
+  margin-bottom: 1.1rem; line-height: 1.75;
+}
+
+.stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.stack-tag {
+  font-size: 11px; font-weight: 500;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-3); border-radius: 5px; padding: 2px 9px;
+}
+
+.timeline { position: relative; 
+  padding-left: 1.75rem; 
+}
+
+.timeline::before {
+  content: '';
+  position: absolute; left: 0; top: 6px; bottom: 6px;
+  width: 1px; background: var(--border);
+}
+
+.tl-item {
+  position: relative;
+  padding: 0 0 2.5rem 1.5rem;
+}
+
+.tl-item:last-child { padding-bottom: 0; 
+}
+
+.tl-dot {
+  position: absolute; left: -2.1rem; top: 5px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--navy-mid);
+  border: 2px solid var(--text-3);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.tl-item:hover .tl-dot {
+  border-color: var(--accent-2);
+  background: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
+}
+
+.tl-period {
+  font-size: 11px; color: var(--text-3); margin-bottom: 4px;
+  letter-spacing: 0.03em;
+}
+
+.tl-company {
+  font-family: var(--display);
+  font-size: 0.95rem; font-weight: 600;
+  color: var(--text-1); margin-bottom: 2px;
+}
+
+.tl-role {
+  font-size: 12.5px; color: var(--accent-2);
+  margin-bottom: 0.7rem;
+}
+
+.tl-desc {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.tl-desc li {
+  font-size: 13px; color: var(--text-2); line-height: 1.7;
+  padding-left: 1rem; position: relative;
+}
+
+.tl-desc li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--text-3); font-size: 11px;
+}
+
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.edu-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem 1.75rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.edu-card:hover { background: var(--card-h); 
+  transform: translateY(-3px); 
+}
+
+.edu-icon {
+  width: 40px; height: 40px;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-2); margin-bottom: 1.1rem;
+}
+
+.edu-school {
+  font-family: var(--display);
+  font-size: 0.92rem; font-weight: 600;
+  color: var(--text-1); margin-bottom: 4px; line-height: 1.35;
+}
+
+.edu-degree { font-size: 12.5px; 
+  color: var(--text-2); 
+  line-height: 1.5; 
+}
+
+.edu-year { font-size: 11px; 
+  color: var(--text-3); 
+  margin-top: 0.5rem; 
+}
+
+.edu-cred {
+  display: inline-block;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--teal);
+  background: rgba(45,212,191,0.08);
+  border: 1px solid rgba(45,212,191,0.18);
+  border-radius: 5px; padding: 2px 8px; margin-top: 0.5rem;
+}
+
+#contact { text-align: center; 
+  padding: 5rem 2rem 6rem; 
+}
+
+#contact .section-intro {
+  font-size: 0.94rem; color: var(--text-2);
+  max-width: 420px; margin: 0 auto 2.5rem; line-height: 1.85;
+}
+
+.contact-cards {
+  display: flex; justify-content: center;
+  gap: 0.85rem; flex-wrap: wrap;
+}
+
+.contact-card {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 13px; font-weight: 400; color: var(--text-2);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.65rem 1.3rem;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.contact-card:hover {
+  border-color: rgba(255,255,255,0.13);
+  color: var(--text-1);
+  background: var(--card-h);
+  transform: translateY(-2px);
+}
+
+.contact-card svg { color: var(--accent-2); 
+}
+
+footer {
+  text-align: center; padding: 1.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 11.5px; color: var(--text-3);
+  position: relative; z-index: 1;
+  letter-spacing: 0.02em;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+  padding: 2rem;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-box {
+  position: relative;
+  width: min(700px, 92vw);
+  border-radius: 16px;
+  border: 1px solid rgba(0,200,255,0.25);
+  box-shadow: 0 0 60px rgba(0,180,255,0.2), 0 24px 80px rgba(0,0,0,0.7);
+  overflow: hidden;
+  background: var(--navy-mid);
+  animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.modal-box img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 75vh;
+  object-fit: contain;
+  filter: contrast(1.08) brightness(1.05) saturate(1.1);
+}
+
+.modal-label {
+  text-align: center;
+  padding: 0.85rem 1.5rem;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent-2);
+  background: var(--navy-mid);
+  border-top: 1px solid var(--border);
+}
+
+.modal-close {
+  position: absolute; top: 10px; right: 12px;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(0,200,255,0.35);
+  color: #fff; border-radius: 50%;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px; line-height: 1;
+  z-index: 10;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.modal-close:hover { background: rgba(0,180,255,0.25); 
+  border-color: rgba(0,200,255,0.7); 
+}
+
+.edu-card { cursor: pointer; 
+}
+
+.reveal { opacity: 0; 
+  transform: translateY(24px); 
+  transition: opacity 0.6s ease, transform 0.6s ease; 
+}
+
+.reveal.visible { opacity: 1; 
+  transform: translateY(0); 
+}
+
+@media (max-width: 720px) {
+  nav { padding: 0.9rem 1.25rem; }
+  .nav-links { display: none; }
+
+  #hero {
+    grid-template-columns: 1fr;
+    padding: 5.5rem 1.25rem 3rem;
+    gap: 2rem; min-height: auto;
+    text-align: center;
+  }
+
+  #hero::before { display: none; }
+  .hero-photo { min-height: auto; order: -1; }
+  .hero-text { align-items: center; }
+  .hero-bio { max-width: 100%; text-align: left; }
+  .hero-cta { justify-content: center; }
+  .hero-meta { justify-content: center; flex-direction: column; align-items: center; gap: 0.85rem; }
+  .ring-wrap { width: 220px; height: 300px; }
+  section { padding: 3.5rem 1.25rem; }
+  .about-grid { grid-template-columns: 1fr 1fr; }
+  .about-grid .about-stat:last-child { grid-column: span 2; }
+  h2 { font-size: 1.3rem; }
+  h1 { font-size: 2.2rem; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .project-card { padding: 1.25rem 1.25rem; }
+  .project-head { flex-direction: column; gap: 0.5rem; }
+  .badge { align-self: flex-start; }
+  .timeline { padding-left: 1.25rem; }
+  .tl-item { padding-left: 1.1rem; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .contact-cards { flex-direction: column; align-items: center; }
+  .modal-box { width: 95vw; }
+  .modal-box img { max-height: 60vh; }
+}
+
+@media (max-width: 460px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-grid .about-stat:last-child { grid-column: auto; }
+  .skills-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 1.9rem; }
+  .ring-wrap { width: 180px; height: 250px; }
+  .hero-meta { font-size: 11px; }
+  .tl-company { font-size: 0.88rem; }
+  .project-desc { font-size: 12.5px; }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00c8ff, #0066aa);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #33d4ff, #0088cc);
+}
+
+.nav-burger {
+  display: none;
+  flex-direction: column; justify-content: center; gap: 5px;
+  background: none; border: none; cursor: pointer;
+  padding: 4px; z-index: 300;
+}
+
+.nav-burger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--text-2); border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed; top: 52px; left: 0; right: 0;
+  background: rgba(5,13,26,0.98);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  flex-direction: column;
+  padding: 1rem 1.5rem 1.5rem;
+  gap: 0.25rem;
+  z-index: 199;
+}
+
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 14px; font-weight: 500;
+  color: var(--text-2); text-decoration: none;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--accent-2); }
+
+@media (max-width: 720px) {
+  .nav-burger { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo">Dave Neil <span>Dela Cruz</span></div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-text reveal">
+    <div class="hero-greeting">Information Technology Graduate</div>
+    <h1>
+      <span class="name-first">Dave Neil</span>
+      <span class="name-last">Dela Cruz</span>
+    </h1>
+    <div class="hero-role" id="typed-role"></div>
+    <p class="hero-bio">
+Fresh Information Technology graduate with proven experience building real-world systems — including an HRIS with payroll management and an attendance monitoring system — using PHP, Java, JavaScript, HTML/CSS, and MS SQL Server. Combines strong technical foundation with adaptability gained from diverse work environments. Eager to join an IT team where I can contribute immediately as a developer or database associate.    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+        View Projects
+      </a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-meta">
+      <a class="meta-chip" href="mailto:dave.work.official23@gmail.com">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        dave.work.official23@gmail.com
+      </a>
+      <a class="meta-chip" href="tel:09091429796">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        09091429796
+      </a>
+      <span class="meta-chip">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        28 Ilocos Sur St. Brgy. Ramon Magsaysay, Bago Bantay, Quezon City, 1105
+      </span>
+    </div>
+  </div>
+
+  <div class="hero-photo reveal">
+    <div class="ring-wrap">
+      <div class="ring-img">
+        <img src="me.jpg" alt="Dave Neil Dela Cruz" loading="eager">
+      </div>
+    </div>
+    <div class="availability">
+      <span class="dot"></span>
+      Open to Opportunities
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="about">
+  <div class="reveal">
+    <p class="eyebrow">Who I am</p>
+    <h2>About Me</h2>
+
+    <div class="about-grid">
+      <div class="about-stat">
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">Real-world systems built</div>
+      </div>
+      <div class="about-stat">
+        <div class="stat-num">5<span>+</span></div>
+        <div class="stat-label">Technologies used in production</div>
+      </div>
+      <div class="about-stat">
+        <div class="stat-num">4<span>y</span></div>
+        <div class="stat-label">Diverse work experience</div>
+      </div>
+    </div>
+
+    <div class="about-body">
+<p>I'm a fresh graduate with a Bachelor of Science in Information Technology from Nueva Ecija University of Science and Technology (NEUST). During my studies, I built real-world systems — including a complete HRIS with payroll management as my capstone — which gave me hands-on exposure to full-stack web development, database design, ERD modeling, and T-SQL. While I'm just starting my professional career, I'm eager to apply what I've learned and grow quickly within a team.</p>      <p>Beyond development, I've held diverse roles across logistics, food service, and merchandising. That background shaped my work ethic: I'm adaptable, detail-oriented, and comfortable dealing with real stakeholders under real pressure. I'm actively seeking entry-level roles in software development, systems analysis, or database management where I can grow and contribute from day one.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="skills">
+  <div class="reveal">
+    <p class="eyebrow">What I work with</p>
+    <h2>Skills & Technologies</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-cat">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">PHP</span>
+          <span class="tag">Java</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Database</div>
+        <div class="skill-tags">
+          <span class="tag">MS SQL Server</span>
+          <span class="tag">T-SQL</span>
+          <span class="tag">Database Design</span>
+          <span class="tag">ERD Modeling</span>
+          <span class="tag">SSMS</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Development</div>
+        <div class="skill-tags">
+          <span class="tag">Full-Stack Web</span>
+          <span class="tag">CRUD Systems</span>
+          <span class="tag">System Analysis</span>
+          <span class="tag">SDLC</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Tools & Environment</div>
+        <div class="skill-tags">
+          <span class="tag">VS Code</span>
+          <span class="tag">Git</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">IT Operations</div>
+        <div class="skill-tags">
+          <span class="tag">Computer Troubleshooting</span>
+          <span class="tag">Basic Networking</span>
+          <span class="tag">Customer Service</span>
+          <span class="tag">Inventory Management</span>
+          <span class="tag">FIFO Stock Rotation</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="projects">
+  <div class="reveal">
+    <p class="eyebrow">What I've built</p>
+    <h2>Projects</h2>
+    <div class="projects-list">
+
+      <div class="project-card">
+        <div class="project-head">
+          <div class="project-title">Human Resources Information System — Schedule, Attendance & Payroll Management</div>
+          <span class="badge">Capstone</span>
+        </div>
+        <p class="project-desc">A production-grade HRIS for a staffing company covering the full employee lifecycle: onboarding, scheduling, multi-status attendance tracking, leave management, and a payroll module with DOLE-compliant computations including 13th month pay, deductions, and allowances. Features an automated payroll processing engine and an attendance matrix designed around real-world shift complexities.</p>
+        <div class="stack">
+          <span class="stack-tag">PHP</span>
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">HTML / CSS</span>
+          <span class="stack-tag">MS SQL Server</span>
+          <span class="stack-tag">T-SQL</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-head">
+          <div class="project-title">Talavera Senior High School — Credential Management System</div>
+          <span class="badge">Web System</span>
+        </div>
+        <p class="project-desc">A web-based system for the school's Registrar's Office to manage student records, credential requests, and document issuance workflows. Built during OJT to replace manual processes — also served as a digital archive for organizing unclaimed graduate records.</p>
+        <div class="stack">
+          <span class="stack-tag">HTML</span>
+          <span class="stack-tag">CSS</span>
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">MS SQL Server</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-head">
+          <div class="project-title">BSIT Attendance Management System</div>
+          <span class="badge">Desktop App</span>
+        </div>
+        <p class="project-desc">A desktop application for tracking and reporting student attendance across a BSIT program. Features real-time attendance recording, student record management, and report generation — built with a Java GUI and MS SQL Server backend.</p>
+        <div class="stack">
+          <span class="stack-tag">Java</span>
+          <span class="stack-tag">MS SQL Server</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="experience">
+  <div class="reveal">
+    <p class="eyebrow">Work history</p>
+    <h2>Experience</h2>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Feb 2026 – May 2026</div>
+        <div class="tl-company">Talavera Senior High School — Registrar's Office</div>
+        <div class="tl-role">On-The-Job Training (OJT)</div>
+        <ul class="tl-desc">
+          <li>Assisted daily Registrar's Office operations including processing and releasing student credentials and serving walk-in clients.</li>
+          <li>Developed a web-based Credential Management System to digitize and archive unclaimed graduate records, replacing a manual filing process.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Aug 2025 – Jun 2026</div>
+        <div class="tl-company">J&T Express 441 DC Cabanatuan Branch</div>
+        <div class="tl-role">On-Call — Warehouse / Dispatch Operations</div>
+        <ul class="tl-desc">
+          <li>Handled parcel sorting, scanning, packing, and loading/unloading to support efficient dispatch cycles on an on-call basis.</li>
+          <li>Maintained accurate parcel handling and timely shipment processing to keep logistics workflow running smoothly.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Nov 2022 – May 2025</div>
+        <div class="tl-company">Jollibee Food Corporation</div>
+        <div class="tl-role">Crew Member — Mega Shell & Talavera Branch</div>
+        <ul class="tl-desc">
+          <li>Managed Foodpanda, dine-in, take-out, and drive-thru orders with a focus on speed and accuracy.</li>
+          <li>Operated cashier and counter service while maintaining food safety compliance and store cleanliness standards.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Jan 2020 – May 2022</div>
+        <div class="tl-company">Acabar Marketing International, Inc.</div>
+        <div class="tl-role">Roving Merchandiser — WalterMart San Jose & Talavera</div>
+        <ul class="tl-desc">
+          <li>Handled product promotions, client orders, and customer inquiries for formula milk products across two WalterMart branches.</li>
+          <li>Managed shelf displays, FIFO stock rotation, inventory levels, and branch coordination for ongoing promotions.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Nov 2019 – Dec 2019</div>
+        <div class="tl-company">Jobcom Manpower Services Inc. — WalterMart Supermarket</div>
+        <div class="tl-role">Backup Assistant</div>
+        <ul class="tl-desc">
+          <li>Supported supermarket staff by organizing products, restocking shelves, and helping maintain smooth daily store and inventory operations.</li>
+          <li>Assisted customers by bagging purchased items carefully and efficiently during busy store operations while providing courteous and friendly customer service.</li>        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Jan 2019 – Jul 2019</div>
+        <div class="tl-company">Chowking Waltermart Talavera</div>
+        <div class="tl-role">Kitchen Crew</div>
+        <ul class="tl-desc">
+          <li>Prepared and served customer food orders efficiently while maintaining kitchen cleanliness, proper sanitation, and compliance with food safety and hygiene standards during daily operations.</li>
+          <li>Provided customer service by assisting and serving customer orders when needed, while also working as a dishwasher responsible for cleaning kitchen utensils, dishes, and cooking equipment to maintain an organized and sanitary work environment.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="education">
+  <div class="reveal">
+    <p class="eyebrow">Academic background</p>
+    <h2>Education & Certifications</h2>
+   <div class="edu-grid">
+
+      <div class="edu-card" onclick="openModal('diploma.jpg', 'NEUST — BS Information Technology Diploma')">
+        <div class="edu-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="edu-school">Nueva Ecija University of Science and Technology</div>
+        <div class="edu-degree">Bachelor of Science in Information Technology</div>
+        <div class="edu-year">2022 – 2026</div>
+        <div class="edu-cred" style="margin-top:0.75rem;">🖼 Click to view diploma</div>
+      </div>
+
+      <div class="edu-card" onclick="openModal('Certiport.jpg', 'Certiport — HTML and CSS · ID: waUTS-H94a')">
+        <div class="edu-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="6"/>
+            <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+          </svg>
+        </div>
+        <div class="edu-school">Certiport Certification</div>
+        <div class="edu-degree">HTML and CSS</div>
+        <div class="edu-year">Issued Nov 2025 · Valid until Nov 2030</div>
+        <div class="edu-cred">ID: waUTS-H94a</div>
+        <div class="edu-cred" style="margin-top:0.5rem;">🖼 Click to view certificate</div>
+      </div>
+
+    </div>
+
+    <div class="modal-overlay" id="edu-modal" onclick="if(event.target===this)this.classList.remove('open')">
+      <div class="modal-box">
+        <ul class="nav-links"></ul>
+        <button class="modal-close" onclick="document.getElementById('edu-modal').classList.remove('open')">✕</button>
+        <img id="modal-img" src="" alt="">
+        <div class="modal-label" id="modal-label"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="reveal">
+    <p class="eyebrow">Get in touch</p>
+    <h2>Let's Connect</h2>
+    <p class="section-intro">
+      I'm actively looking for entry-level opportunities in software development or database management. Don't hesitate to reach out — I'm always open to a conversation.
+    </p>
+    <div class="contact-cards">
+      <a class="contact-card" href="mailto:dave.work.official23@gmail.com">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        dave.work.official23@gmail.com
+      </a>
+      <a class="contact-card" href="tel:09091429796">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        09091429796
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Dave Neil Dela Cruz · BS Information Technology · Quezon City, Philippines</p>
+</footer>
+
+<script>
+const canvas = document.getElementById('stars-canvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resizeCanvas() { canvas.width = innerWidth; canvas.height = innerHeight; }
+resizeCanvas();
+addEventListener('resize', resizeCanvas);
+for (let i = 0; i < 160; i++) {
+  stars.push({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.1 + 0.2,
+    speed: Math.random() * 0.00025 + 0.00008,
+    alpha: Math.random() * 0.5 + 0.3
+  });
+}
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (const s of stars) {
+    s.y -= s.speed;
+    if (s.y < 0) { s.y = 1; s.x = Math.random(); }
+    ctx.beginPath();
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(148,180,220,${s.alpha})`;
+    ctx.fill();
+  }
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+const roles = [
+  'Fresh IT Graduate',
+  'Full-Stack Developer',
+  'Database Enthusiast',
+  'Systems Builder',
+];
+let ri = 0, ci = 0, deleting = false;
+const el = document.getElementById('typed-role');
+el.innerHTML = '<span class="typing-cursor"></span>';
+function type() {
+  const word = roles[ri];
+  if (!deleting) {
+    ci++;
+    el.innerHTML = word.slice(0, ci) + '<span class="typing-cursor"></span>';
+    if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    ci--;
+    el.innerHTML = word.slice(0, ci) + '<span class="typing-cursor"></span>';
+    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+  }
+  setTimeout(type, deleting ? 55 : 90);
+}
+setTimeout(type, 600);
+
+const reveals = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+reveals.forEach(r => revObs.observe(r));
+
+const nav = document.getElementById('main-nav');
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+function onScroll() {
+  nav.classList.toggle('scrolled', scrollY > 40);
+  let current = '';
+  sections.forEach(sec => {
+    if (scrollY >= sec.offsetTop - 110) current = sec.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+
+function openModal(src, label) {
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal-label').textContent = label;
+  document.getElementById('edu-modal').classList.add('open');
+}
+
+addEventListener('scroll', onScroll, { passive: true });
+</script>
+</body>
+</html>
